@@ -31,7 +31,19 @@
             </div>
             <div class="field required">
                 <label>头像：</label>
-                <input type="file" @change="getFile($event)" name="avatar" accept="image/*">
+                <div class="upload-box">
+                    <input type="file" @change="getFile($event)" name="avatar" accept="image/*" class="upload">
+                    <div class="img">
+                        <img src="../../assets/img/demo.jpeg" alt="">
+                    </div>
+                    <div class="action-box">
+                        <span class="title">
+                            支持jpg、png等的图片
+                        </span>
+                        <button class="button" type="button">点击上传</button>
+                    </div>
+                </div>
+
             </div>
             <div class="field required">
                 <label>个人简介：</label>
@@ -155,10 +167,13 @@
             .field {
                 display: flex;
                 padding: 2rem 0;
+                align-items: center;
                 border-bottom: 1px solid #f1f1f1;
-                border-top: 1px solid #f1f1f1;
                 &:first-of-type {
                     border-top: 1px solid #f1f1f1;
+                }
+                &:nth-last-of-type(3) {
+                    padding: 1rem 0;
                 }
                 label {
                     display: inline-block;
@@ -174,12 +189,51 @@
                         border: 1px solid @defaultBlue;
                     }
                 }
-                .upload {
+                .upload-box {
                     display: flex;
-                    .header {
-                        flex: 1;
+                    position: relative;
+                    .upload {
+                        position: absolute;
+                        z-index: 1;
+                        filter: opacity(0);
+                        height: 2rem;
+                        width: 8rem;
+                        bottom: 0;
+                        left: 6rem;
+                        cursor: pointer;
+                    }
+                    .img {
+                        flex: 0 0 5rem;
                         width: 5rem;
                         height: 5rem;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    .action-box {
+                        margin-left: 1rem;
+                        .title {
+                            display: block;
+                            color: #909090;
+                            font-size: 1rem;
+                            margin-bottom: 1.5rem;
+                        }
+                        .button {
+                            display: inline-block;
+                            height: 2rem;
+                            width: 8rem;
+                            line-height: 2rem;
+                            text-align: center;
+                            font-size: 1rem;
+                            font-weight: 200;
+                            color: #ffffff;
+                            background: @defaultBlue;
+                            box-sizing: content-box;
+                            margin: 0;
+                            border-radius: .2rem;
+                            cursor: pointer;
+                        }
                     }
                 }
             }
