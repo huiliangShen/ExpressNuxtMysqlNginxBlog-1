@@ -20,6 +20,7 @@ import axios from 'axios';
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
+
 const app = express();
 
 // app.use(express.static(path.join(__dirname, 'static/img')));
@@ -44,7 +45,7 @@ app.use(cookieParser());
 // process.env.DEBUG = 'nuxt:*'
 
 
-const host = process.env.HOST || '127.0.0.1';
+const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || config.port;
 
 // console.log("===========dirname",__dirname);

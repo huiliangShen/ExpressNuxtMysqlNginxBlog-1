@@ -57,94 +57,95 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import userLoginUtil from "~/util/userLoginUtil.js";
-    export default {
-        layout: 'regist',
-        components: {},
-        // async asyncData() {
-        // 	let pageIndex = 0;
-        // 	let pageSize = 3;
-        // 	var url = "/api/posts?" + "pageIndex=" + pageIndex + "&pageSize=" + pageSize;
-        // 	let result = await axios.get(url).catch(error => {
-        // 		console.log("===============error==========", error);
-        // 	});
-        // 	return {
-        // 		posts: result && result.data || [],
-        // 		pageIndex: pageIndex,
-        // 		pageSize: pageSize
-        // 	};
-        // },
-        data() {
-            return {
-                user: {
-                    name: (new Date()).toDateString(),
-                    password: '123456',
-                    repassword: '123456',
-                    gender: "x",
-                    avatar: null,
-                    bio: "注册测试"
-                }
-            }
-        },
-        mounted() {
-            //this.requestData();
-            // alert("hehe");
-            //document.location.href = document.location.href + "/posts";
-            // document.getElementById("signupForm").ajaxSubmit(function(message) {
-            // 		console.log("=====叶叶====",message);
-            // });
-        },
-        methods: {
-            async requestData() {
-                let pageIndex = 0;
-                let pageSize = 3;
-                var url = "/api/posts?" + "pageIndex=" + pageIndex + "&pageSize=" + pageSize;
-                let result = await axios.get(url).catch(error => {
-                    console.log("===============error==========", error);
-                });
-                this.posts = result && result.data || [];
-            },
-            getFile(event) {
-                this.user.avatar = event.target.files[0];
-            },
-            async submit() {
-                event.preventDefault();
-                var url = "/api/signup";
-
-                let formData = new FormData();
-                formData.append('name', this.user.name);
-                formData.append('password', this.user.password);
-                formData.append('repassword', this.user.repassword);
-                formData.append('gender', this.user.gender);
-                formData.append('avatar', this.user.avatar);
-                formData.append('bio', this.user.bio);
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-                // console.log("url==========>", url);
-                let result = await axios.post(url, formData, config).catch(error => {
-                    console.log("===============error==========", error);
-                });
-                var user;
-                if (result.data && !result.data.err && result.data.user) {
-                    user = result.data.user;
-                    userLoginUtil.setLoginedUser(user);
-                    // this.$notify({
-                    // 	group: 'foo',
-                    // 	title: 'Important message',
-                    // 	text: 'Hello user! This is a notification!'
-                    // });
-                    history.go(-1);
-                } else {
-                    alert(result.data.err && result.data.err.message ||"注册失败");
-                }
-                console.log(result);
-            }
-        }
-    };
+	import axios from "axios";
+	import userLoginUtil from "~/util/userLoginUtil.js";
+	export default {
+		layout: 'regist',
+		components: {},
+		// async asyncData() {
+		// 	let pageIndex = 0;
+		// 	let pageSize = 3;
+		// 	var url = "/api/posts?" + "pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+		// 	let result = await axios.get(url).catch(error => {
+		// 		console.log("===============error==========", error);
+		// 	});
+		// 	return {
+		// 		posts: result && result.data || [],
+		// 		pageIndex: pageIndex,
+		// 		pageSize: pageSize
+		// 	};
+		// },
+		data() {
+			return {
+				user: {
+					name: (new Date()).toDateString(),
+					password: '123456',
+					repassword: '123456',
+					gender: "x",
+					avatar: null,
+					bio: "注册测试"
+				}
+			}
+		},
+		mounted() {
+			//this.requestData();
+			// alert("hehe");
+			//document.location.href = document.location.href + "/posts";
+			// document.getElementById("signupForm").ajaxSubmit(function(message) {
+			// 		console.log("=====叶叶====",message);
+			// });
+		},
+		methods: {
+			async requestData() {
+				let pageIndex = 0;
+				let pageSize = 3;
+				var url = "/api/posts?" + "pageIndex=" + pageIndex + "&pageSize=" + pageSize;
+				let result = await axios.get(url).catch(error => {
+					console.log("===============error==========", error);
+				});
+				this.posts = result && result.data || [];
+			},
+			getFile(event) {
+				this.user.avatar = event.target.files[0];
+			},
+			async submit() {
+				event.preventDefault();
+				var url = "/api/signup";
+				this.$showLoading();
+				let formData = new FormData();
+				formData.append('name', this.user.name);
+				formData.append('password', this.user.password);
+				formData.append('repassword', this.user.repassword);
+				formData.append('gender', this.user.gender);
+				formData.append('avatar', this.user.avatar);
+				formData.append('bio', this.user.bio);
+				let config = {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}
+				// console.log("url==========>", url);
+				let result = await axios.post(url, formData, config).catch(error => {
+					console.log("===============error==========", error);
+				});
+				this.$hiddenLoading();
+				var user;
+				if (result.data && !result.data.err && result.data.user) {
+					user = result.data.user;
+					userLoginUtil.setLoginedUser(user);
+					// this.$notify({
+					// 	group: 'foo',
+					// 	title: 'Important message',
+					// 	text: 'Hello user! This is a notification!'
+					// });
+					history.go(-1);
+				} else {
+					alert(result.data.err && result.data.err.message ||"注册失败");
+				}
+				console.log(result);
+			}
+		}
+	};
 </script>
 
 <style lang="less" scoped>
